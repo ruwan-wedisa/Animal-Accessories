@@ -4,6 +4,8 @@ import Counter from "./Counter";
 import EmptyCart from "../empty-states/EmptyCart";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import { findDOMNode } from "react-dom";
+import logo from '../animal-shop.png' 
+
 
 class Header extends Component {
   constructor(props) {
@@ -115,7 +117,7 @@ class Header extends Component {
           <div className="brand">
             <img
               className="logo"
-              src="https://res.cloudinary.com/sivadass/image/upload/v1493547373/dummy-logo/Veggy.png"
+              src={logo}
               alt="Veggy Brand Logo"
             />
           </div>
@@ -151,7 +153,7 @@ class Header extends Component {
               <input
                 type="search"
                 ref="searchBox"
-                placeholder="Search for Vegetables and Fruits"
+                placeholder="Search for Animal Accessories"
                 className="search-keyword"
                 onChange={this.props.handleSearch}
               />

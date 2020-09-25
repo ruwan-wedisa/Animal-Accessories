@@ -37,7 +37,7 @@ class App extends Component {
   // Fetch Initial Set of Products from external API
   getProducts() {
     let url =
-      "https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json";
+      "https://res.cloudinary.com/ruwanwedisa/raw/upload/v1600956864/json/products_yacr1w.json";
     axios.get(url).then(response => {
       this.setState({
         products: response.data
@@ -67,7 +67,6 @@ class App extends Component {
     let productID = selectedProducts.id;
     let productQty = selectedProducts.quantity;
     if (this.checkProduct(productID)) {
-      console.log("hi");
       let index = cartItem.findIndex(x => x.id == productID);
       cartItem[index].quantity =
         Number(cartItem[index].quantity) + Number(productQty);
@@ -171,7 +170,8 @@ class App extends Component {
         <Products
           productsList={this.state.products}
           searchTerm={this.state.term}
-          addToCart={this.handleAddToCart}
+          addToCartCarton={this.handleAddToCart}
+          addToCartSingle={this.handleAddToCart}
           productQuantity={this.state.quantity}
           updateQuantity={this.updateQuantity}
           openModal={this.openModal}

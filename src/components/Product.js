@@ -7,10 +7,12 @@ class Product extends Component {
     this.state = {
       selectedProduct: {},
       quickViewProduct: {},
-      isAdded: false
+      isAddedCarton: false,
+      isAddedSingle:false
     };
   }
-  addToCart(image, name, price, id, quantity) {
+  
+  addToCartCarton(image, name, price, id, quantity) {
     this.setState(
       {
         selectedProduct: {
@@ -22,23 +24,54 @@ class Product extends Component {
         }
       },
       function() {
-        this.props.addToCart(this.state.selectedProduct);
+        this.props.addToCartCarton(this.state.selectedProduct);
       }
     );
     this.setState(
       {
-        isAdded: true
+        isAddedCarton: true
       },
       function() {
         setTimeout(() => {
           this.setState({
-            isAdded: false,
+            isAddedCarton: false,
             selectedProduct: {}
           });
         }, 3500);
       }
     );
   }
+
+  addToCartSingle(image, name, price, id, quantity) {
+    this.setState(
+      {
+        selectedProduct: {
+          image: image,
+          name: name,
+          price: price,
+          id: id,
+          quantity: quantity
+        }
+      },
+      function() {
+        this.props.addToCartSingle(this.state.selectedProduct);
+      }
+    );
+    this.setState(
+      {
+        isAddedSingle: true
+      },
+      function() {
+        setTimeout(() => {
+          this.setState({
+            isAddedSingle: false,
+            selectedProduct: {}
+          });
+        }, 3500);
+      }
+    );
+  }
+
   quickView(image, name, price, id) {
     this.setState(
       {
@@ -62,6 +95,7 @@ class Product extends Component {
     let quantity = this.props.productQuantity;
     return (
       <div className="product">
+        <h4 className="product-name">{this.props.name}</h4>
         <div className="product-image">
           <img
             src={image}
@@ -76,30 +110,69 @@ class Product extends Component {
             )}
           />
         </div>
-        <h4 className="product-name">{this.props.name}</h4>
-        <p className="product-price">{this.props.price}</p>
+
+        <p className="product-price">Price : {this.props.price}</p>
+        <div className ="number-of-units">Units in Carton : 20</div>
+        <div className = "container">
+        
+            <div className = "item-with-details">
         <Counter
           productQuantity={quantity}
           updateQuantity={this.props.updateQuantity}
           resetQuantity={this.resetQuantity}
         />
-        <div className="product-action">
-          <button
-            className={!this.state.isAdded ? "" : "added"}
-            type="button"
-            onClick={this.addToCart.bind(
-              this,
-              image,
-              name,
-              price,
-              id,
-              quantity
-            )}
-          >
-            {!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}
-          </button>
+              <div className="sale-count-label">Carton Amount</div>
+              <div className="product-action">
+                <button
+                  className={!this.state.isAddedCarton ? "" : "added"}
+                  type="button"
+                  onClick={this.addToCartCarton.bind(
+                    this,
+                    image,
+                    name,
+                    price,
+                    id,
+                    quantity
+                  )}
+                >
+                  {!this.state.isAddedCarton ? "ADD TO CART" : "✔ ADDED"}
+                </button>
+                
+              </div>
+            </div>
+
+            <div className = "item-with-details-1">
+        <Counter
+          productQuantity={quantity}
+          updateQuantity={this.props.updateQuantity}
+          resetQuantity={this.resetQuantity}
+        />
+              <div className ="sale-count-label">Single Amount</div>
+              <div className="product-action">
+                <button
+                  className={!this.state.isAddedSingle ? "" : "added"}
+                  type="button"
+                  onClick={this.addToCartSingle.bind(
+                    this,
+                    image,
+                    name,
+                    price,
+                    id,
+                    quantity
+                  )}
+                >
+                  {!this.state.isAddedSingle ? "ADD TO CART" : "✔ ADDED"}
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className ="rule-set"><strong>Conditions: </strong><dl><dt>If you purchase single units, the price is acquired using the carton price multiplied by an increase of
+30%</dt><dt>
+If you purchase 3 cartons or more, you will receive a 10% discount off the carton price
+</dt>
+</dl>
         </div>
-      </div>
+        </div>
     );
   }
 }
