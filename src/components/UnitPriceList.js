@@ -63,13 +63,13 @@ class UnitPriceList extends Component {
     var itemPriceList = this.state.productUnitPricingList.map(unit => {
       ++count;
       numOfCartons = parseInt(count / unit.noOfUnitsInCartoon);
-      let unitPrice = (Math.round(unit.priceOFSingleCartoon * 100) / 100).toFixed(2);
+      let unitPrice = unit.priceOFSingleCartoon.toFixed(2);
       return(
         <tr className="w3-hover-green" key={count}>
-            <td width="30%" className="w3-center">{unit.itemName}</td>
-            <td className="w3-center" width="20%">{count}</td>
-            <td className="w3-center" width="20%">{numOfCartons}</td>
-            <td className="w3-center">$ {unitPrice}</td>
+            <td width="25%" className="w3-center">{unit.itemName}</td>
+            <td className="w3-center" width="25%">{count}</td>
+            <td className="w3-center" width="25%">{numOfCartons}</td>
+            <td className="w3-center" width="25%">$ {unitPrice}</td>
         </tr>
       )
 
@@ -95,10 +95,10 @@ class UnitPriceList extends Component {
                     <table className="w3-table-all table-body ">
                     <tbody>
                         <tr >
-                        <th className="w3-center">Item Name</th>
-                        <th className="w3-center">Units</th>
-                        <th className="w3-center">Cartons</th>
-                        <th className="w3-center">Price</th>
+                        <th className="w3-center" width="25%">Item Name</th>
+                        <th className="w3-center" width="25%">Units</th>
+                        <th className="w3-center" width="25%">Cartons</th>
+                        <th className="w3-center" width="25%">Price</th>
                         </tr>
                         {itemPriceList}
                       </tbody>

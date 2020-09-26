@@ -34,6 +34,7 @@ class Products extends Component {
             updateQuantity={this.props.updateQuantity}
             openModal={this.props.openModal}
             openModalUnitPrice={this.props.openModalUnitPrice}
+            unitsPerCarton = {product.noOfUnitsInCartoon}
           />
         );
       });

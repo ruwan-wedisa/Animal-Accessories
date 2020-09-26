@@ -43,13 +43,13 @@ class Product extends Component {
     );
   }
 
-  addToCartSingle(imageUrl, itemName, priceOFSingleCartoon, id, quantity) {
+  addToCartSingle(imageUrl, itemName, priceOFSingleUnit, id, quantity) {
     this.setState(
       {
         selectedProduct: {
           imageUrl: imageUrl,
           itemName: itemName,
-          priceOFSingleCartoon: priceOFSingleCartoon,
+          priceOFSingleUnit: priceOFSingleUnit,
           id: id,
           quantity: quantity
         }
@@ -131,7 +131,7 @@ class Product extends Component {
         </div>
 
         <p className="product-price">Price : {priceOFSingleCartoon}</p>
-        <div className ="number-of-units">Units in Carton : 20</div>
+        <div className ="number-of-units">Units in Carton : {this.props.unitsPerCarton}</div>
         <div className ="click-here"><a href="#" onClick={this.quickViewPrice.bind(
               this,
               imageUrl,
