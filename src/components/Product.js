@@ -7,18 +7,19 @@ class Product extends Component {
     this.state = {
       selectedProduct: {},
       quickViewProduct: {},
+      quickViewUnitPrices:{},
       isAddedCarton: false,
       isAddedSingle:false
     };
   }
   
-  addToCartCarton(image, name, price, id, quantity) {
+  addToCartCarton(imageUrl, itemName, priceOFSingleCartoon, id, quantity) {
     this.setState(
       {
         selectedProduct: {
-          image: image,
-          name: name,
-          price: price,
+          imageUrl: imageUrl,
+          itemName: itemName,
+          priceOFSingleCartoon: priceOFSingleCartoon,
           id: id,
           quantity: quantity
         }
@@ -42,13 +43,13 @@ class Product extends Component {
     );
   }
 
-  addToCartSingle(image, name, price, id, quantity) {
+  addToCartSingle(imageUrl, itemName, priceOFSingleCartoon, id, quantity) {
     this.setState(
       {
         selectedProduct: {
-          image: image,
-          name: name,
-          price: price,
+          imageUrl: imageUrl,
+          itemName: itemName,
+          priceOFSingleCartoon: priceOFSingleCartoon,
           id: id,
           quantity: quantity
         }
@@ -72,13 +73,13 @@ class Product extends Component {
     );
   }
 
-  quickView(image, name, price, id) {
+  quickView(imageUrl, itemName, priceOFSingleCartoon, id) {
     this.setState(
       {
         quickViewProduct: {
-          image: image,
-          name: name,
-          price: price,
+          imageUrl: imageUrl,
+          itemName: itemName,
+          priceOFSingleCartoon: priceOFSingleCartoon,
           id: id
         }
       },
@@ -87,32 +88,58 @@ class Product extends Component {
       }
     );
   }
+
+  quickViewPrice(imageUrl, itemName, priceOFSingleCartoon, id) {
+    this.setState(
+      {
+        quickViewUnitPrices: {
+          imageUrl: imageUrl,
+          itemName: itemName,
+          priceOFSingleCartoon: priceOFSingleCartoon,
+          id: id
+        }
+      },
+      function() {
+        this.props.openModalUnitPrice(this.state.quickViewUnitPrices);
+      }
+    );
+  }
+
   render() {
-    let image = this.props.image;
-    let name = this.props.name;
-    let price = this.props.price;
+    let imageUrl = this.props.imageUrl;
+    let itemName = this.props.itemName;
+    let priceOFSingleCartoon = (Math.round(this.props.priceOFSingleCartoon * 100) / 100).toFixed(2);
+    
     let id = this.props.id;
     let quantity = this.props.productQuantity;
     return (
       <div className="product">
-        <h4 className="product-name">{this.props.name}</h4>
+        <h4 className="product-name">{this.props.itemName}</h4>
         <div className="product-image">
           <img
-            src={image}
-            alt={this.props.name}
+            src={imageUrl}
+            alt={this.props.itemName}
             onClick={this.quickView.bind(
               this,
-              image,
-              name,
-              price,
+              imageUrl,
+              itemName,
+              priceOFSingleCartoon,
               id,
               quantity
             )}
           />
         </div>
 
-        <p className="product-price">Price : {this.props.price}</p>
+        <p className="product-price">Price : {priceOFSingleCartoon}</p>
         <div className ="number-of-units">Units in Carton : 20</div>
+        <div className ="click-here"><a href="#" onClick={this.quickViewPrice.bind(
+              this,
+              imageUrl,
+              itemName,
+              priceOFSingleCartoon,
+              id,
+              quantity
+            )} > Click Here to View Unit Prices</a></div>
         <div className = "container">
         
             <div className = "item-with-details">
@@ -128,9 +155,9 @@ class Product extends Component {
                   type="button"
                   onClick={this.addToCartCarton.bind(
                     this,
-                    image,
-                    name,
-                    price,
+                    imageUrl,
+                    itemName,
+                    priceOFSingleCartoon,
                     id,
                     quantity
                   )}
@@ -154,9 +181,9 @@ class Product extends Component {
                   type="button"
                   onClick={this.addToCartSingle.bind(
                     this,
-                    image,
-                    name,
-                    price,
+                    imageUrl,
+                    itemName,
+                    priceOFSingleCartoon,
                     id,
                     quantity
                   )}

@@ -37,12 +37,31 @@
       content: "$ ";
     }
   }
+    .product-price {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 22px;
+    margin-bottom: 16px;
+    &:before {
+      content: "$ ";
+    }
+  }
 
   .number-of-units {
     font-size: 16px;
     font-weight: 400;
     line-height: 22px;
     margin-bottom: 16px;
+  }
+
+
+  .click-here {
+    font-size: 16px;
+    font-weight: 400;
+    color: blue;
+    line-height: 12px;
+    text-align: center;
+    text-decoration: underline;
   }
 
   .rule-set {

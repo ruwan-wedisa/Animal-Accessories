@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Products from "./components/Products";
 import Footer from "./components/Footer";
 import QuickView from "./components/QuickView";
+import UnitPriceList from "./components/UnitPriceList"
 import "./scss/style.scss";
 
 class App extends Component {
@@ -20,7 +21,9 @@ class App extends Component {
       cartBounce: false,
       quantity: 1,
       quickViewProduct: {},
-      modalActive: false
+      quickViewUnitPrices:{},
+      modalActive: false,
+      modalUnitPrice:false
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
@@ -32,12 +35,14 @@ class App extends Component {
     this.updateQuantity = this.updateQuantity.bind(this);
     this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
     this.openModal = this.openModal.bind(this);
+    this.openModalUnitPrice = this.openModalUnitPrice.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.closeModalUnitPrice = this.closeModalUnitPrice.bind(this);
   }
   // Fetch Initial Set of Products from external API
   getProducts() {
-    let url =
-      "https://res.cloudinary.com/ruwanwedisa/raw/upload/v1600956864/json/products_yacr1w.json";
+    //let url = "https://res.cloudinary.com/ruwanwedisa/raw/upload/v1601034805/json/products_rcu34w.json";
+    let url = "http://localhost:8080/items/all"
     axios.get(url).then(response => {
       this.setState({
         products: response.data
@@ -123,7 +128,7 @@ class App extends Component {
     let total = 0;
     let cart = this.state.cart;
     for (var i = 0; i < cart.length; i++) {
-      total += cart[i].price * parseInt(cart[i].quantity);
+      total += cart[i].priceOFSingleCartoon * parseInt(cart[i].quantity);
     }
     this.setState({
       totalAmount: total
@@ -144,10 +149,25 @@ class App extends Component {
       modalActive: true
     });
   }
+  
+  openModalUnitPrice(product) {
+    console.log('test me ',product.id)
+    this.setState({
+      quickViewUnitPrices:product,
+      modalUnitPrice: true
+    });
+  }
+
   // Close Modal
   closeModal() {
     this.setState({
       modalActive: false
+    });
+  }
+
+  closeModalUnitPrice() {
+    this.setState({
+      modalUnitPrice: false
     });
   }
 
@@ -175,12 +195,18 @@ class App extends Component {
           productQuantity={this.state.quantity}
           updateQuantity={this.updateQuantity}
           openModal={this.openModal}
+          openModalUnitPrice={this.openModalUnitPrice}
         />
         <Footer />
         <QuickView
           product={this.state.quickViewProduct}
           openModal={this.state.modalActive}
           closeModal={this.closeModal}
+        />
+        <UnitPriceList
+          product={this.state.quickViewUnitPrices}
+          openModalUnitPrice={this.state.modalUnitPrice}
+          closeModalUnitPrice={this.closeModalUnitPrice}
         />
       </div>
     );

@@ -33,6 +33,7 @@ class QuickView extends Component {
   }
 
   render() {
+    
     return (
       <div
         className={
@@ -50,13 +51,13 @@ class QuickView extends Component {
           <div className="quick-view">
             <div className="quick-view-image">
               <img
-                src={this.props.product.image}
-                alt={this.props.product.name}
+                src={this.props.product.imageUrl}
+                alt={this.props.product.itemName}
               />
             </div>
             <div className="quick-view-details">
-              <span className="product-name">{this.props.product.name}</span>
-              <span className="product-price">{this.props.product.price}</span>
+              <span className="product-name">{this.props.product.itemName}</span>
+              <span className="product-price">{this.props.product.priceOFSingleCartoon}</span>
             </div>
           </div>
         </div>

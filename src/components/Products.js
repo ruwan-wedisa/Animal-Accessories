@@ -15,7 +15,7 @@ class Products extends Component {
 
     function searchingFor(term) {
       return function(x) {
-        return x.name.toLowerCase().includes(term.toLowerCase()) || !term;
+        return x.itemName.toLowerCase().includes(term.toLowerCase()) || !term;
       };
     }
     productsData = this.props.productsList
@@ -24,15 +24,16 @@ class Products extends Component {
         return (
           <Product
             key={product.id}
-            price={product.price}
-            name={product.name}
-            image={product.image}
+            priceOFSingleCartoon={product.priceOFSingleCartoon}
+            itemName={product.itemName}
+            imageUrl={product.imageUrl}
             id={product.id}
             addToCartCarton={this.props.addToCartCarton}
             addToCartSingle={this.props.addToCartSingle}
             productQuantity={this.props.productQuantity}
             updateQuantity={this.props.updateQuantity}
             openModal={this.props.openModal}
+            openModalUnitPrice={this.props.openModalUnitPrice}
           />
         );
       });

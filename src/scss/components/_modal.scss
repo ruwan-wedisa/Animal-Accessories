@@ -50,7 +50,7 @@
     font-size: 24px;
     float: right;
     &:before {
-      content: "₹ ";
+      content: "$ ";
     }
   }
 }
@@ -62,4 +62,27 @@
     display: block;
     border-radius: 4px 4px 0 0;
   }
+}
+.quick-view-unit-price {
+  
+  .table-container{
+    padding-bottom: 40px;
+    padding-left: 30px;
+    padding-right: 30px;
+
+  }
+  div {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    display: block;
+    border-radius: 4px 4px 0 0;
+  }
+  .table-header{
+    text-align: left;
+    font-size: 16pt;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
 }
