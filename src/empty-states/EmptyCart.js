@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import emptyCart from '../static/images/empty-cart.png' 
 
 const EmptyCart = props => {
   return (
     <div className="empty-cart">
       <img
-        src="https://res.cloudinary.com/sivadass/image/upload/v1495427934/icons/empty-cart.png"
+        src={emptyCart}
         alt="empty-cart"
       />
       <h2>You cart is empty!</h2>

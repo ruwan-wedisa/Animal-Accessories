@@ -11,8 +11,7 @@ class UnitPriceList extends Component {
   }
 
   getProductUnitPricingList(itemId) {
-    //let url = "https://res.cloudinary.com/ruwanwedisa/raw/upload/v1601034805/json/products_rcu34w.json";
-    let url = "http://localhost:8080/items/calculate_price/single2/"+itemId
+    let url = "http://localhost:8080/items/calculate_price/singleAll/"+itemId
     axios.get(url).then(response => {
       this.setState({
         productUnitPricingList: response.data
@@ -20,8 +19,7 @@ class UnitPriceList extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps){
-    
+  componentWillReceiveProps(nextProps){    
     var itemId = nextProps.product.id;
     if(itemId != undefined) {
       this.getProductUnitPricingList(itemId);
@@ -104,10 +102,6 @@ class UnitPriceList extends Component {
                     </table>
                 </div>
             </div>
-            {/* <div className="quick-view-details">
-              <span className="product-name">{this.props.product.itemName}</span>
-              <span className="product-price">{this.props.product.priceOFSingleCartoon}</span>
-            </div> */}
           </div>
         </div>
       </div>

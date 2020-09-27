@@ -143,8 +143,8 @@ class Product extends Component {
               quantity
             )} > Click Here to View Unit Prices</a></div>
         <div className = "container">
-        
-            <div className = "item-with-details">
+        <div className = "item-with-details">
+
         <Counter
           productQuantity={quantity}
           updateQuantity={this.props.updateQuantity}
@@ -199,11 +199,12 @@ class Product extends Component {
               </div>
             </div>
           </div>
-          <div className ="rule-set"><strong>Conditions: </strong><dl><dt>If you purchase single units, the price is acquired using the carton price multiplied by an increase of
-30%</dt><dt>
-If you purchase 3 cartons or more, you will receive a 10% discount off the carton price
-</dt>
-</dl>
+          <div className ="rule-set"><strong>Conditions: </strong>
+          <dl>
+            <dt>If you purchase single units, the price is acquired using the carton price multiplied by an increase of 30%</dt><dt>
+            If you purchase 3 cartons or more, you will receive a 10% discount off the carton price
+          </dt>
+          </dl>
         </div>
         </div>
     );

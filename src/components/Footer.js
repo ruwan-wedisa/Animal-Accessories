@@ -16,7 +16,7 @@ const Footer = props => {
         </a>
       </p>
       <p>
-        &copy; 2020 <strong>Animal Shop</strong> - Buy any thing from one Place
+        &copy; 2020 <strong>Animal Store</strong> - Buy any thing from one Place
       </p>
     </footer>
   );

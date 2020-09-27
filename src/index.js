@@ -27,6 +27,7 @@ class App extends Component {
       price:0,
       currentPrice:0
     };
+
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
     this.handleCategory = this.handleCategory.bind(this);
@@ -42,10 +43,10 @@ class App extends Component {
     this.closeModalUnitPrice = this.closeModalUnitPrice.bind(this);
     this.getUnitPrice = this.getUnitPrice.bind(this);
     this.setTotalPrice = this.setTotalPrice.bind(this)
+
   }
-  // Fetch Initial Set of Products from external API
+  // Fetch Initial Set of Products from DB
   getProducts() {
-    //let url = "https://res.cloudinary.com/ruwanwedisa/raw/upload/v1601034805/json/products_rcu34w.json";
     let url = "http://localhost:8080/items/all"
     axios.get(url).then(response => {
       this.setState({
@@ -54,8 +55,7 @@ class App extends Component {
     });
   }
 
-   getUnitPrice(requestBody){
-
+  getUnitPrice(requestBody){
     axios({
       url: 'http://localhost:8080/items/calculate_price/all',
       method: 'post',
@@ -65,32 +65,29 @@ class App extends Component {
         console.log(response.data.price ,'gg');
         this.setTotalPrice(response.data.price)
     });
-
   }
   
-
-
-
   componentWillMount() {
     this.getProducts();
 
   }
 
-
-
   // Search by Keyword
   handleSearch(event) {
     this.setState({ term: event.target.value });
   }
+
   // Mobile Search Reset
   handleMobileSearch() {
     this.setState({ term: "" });
   }
+
   // Filter by Category
   handleCategory(event) {
     this.setState({ category: event.target.value });
     console.log(this.state.category);
   }
+
   // Add to Cart
   handleAddToCart(selectedProducts) {
     let cartItem = this.state.cart;
@@ -99,7 +96,7 @@ class App extends Component {
     if (this.checkProduct(productID)) {
       let index = cartItem.findIndex(x => x.id == productID);
       cartItem[index].quantity =
-        Number(cartItem[index].quantity) + Number(productQty);
+      Number(cartItem[index].quantity) + Number(productQty);
       this.setState({
         cart: cartItem
       });
@@ -124,6 +121,7 @@ class App extends Component {
     this.sumTotalItems(this.state.cart);
     this.sumTotalAmount(this.state.cart);
   }
+
   handleRemoveProduct(id, e) {
     let cart = this.state.cart;
     let index = cart.findIndex(x => x.id == id);
@@ -135,12 +133,14 @@ class App extends Component {
     this.sumTotalAmount(this.state.cart);
     e.preventDefault();
   }
+
   checkProduct(productID) {
     let cart = this.state.cart;
     return cart.some(function(item) {
       return item.id === productID;
     });
   }
+
   sumTotalItems() {
     let total = 0;
     let totalQuantity = 0;
@@ -155,35 +155,20 @@ class App extends Component {
   }
 
   setTotalPrice(amount){
-    console.log('current price ',amount)
-
     this.setState(prevState => {
       return {totalAmount: amount}
     });
-
-    // this.setState({
-    //   totalAmount: price
-    // });
-
   }
-  sumTotalAmount() {
-    let total = 0;
-    let cart = this.state.cart;
-    let price = 0;
 
+  sumTotalAmount() {
+    let cart = this.state.cart;
     let requestBody = [];
 
-
-    for (var i = 0; i < cart.length; i++) {
-     
-     console.log( "itemId",cart[i].id,  "amount",cart[i].quantity )
-     var obj = {	"itemId":cart[i].id,  "amount":cart[i].quantity}
-     requestBody.push(obj)
-
+    for (var i = 0; i < cart.length; i++) { 
+      var obj = {	"itemId":cart[i].id,  "amount":cart[i].quantity}
+      requestBody.push(obj)
     }
-    
     this.getUnitPrice(requestBody)
-    
   }
 
   //Reset Quantity
@@ -202,7 +187,6 @@ class App extends Component {
   }
   
   openModalUnitPrice(product) {
-    console.log('test me ',product.id)
     this.setState({
       quickViewUnitPrices:product,
       modalUnitPrice: true

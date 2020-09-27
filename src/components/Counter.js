@@ -41,7 +41,6 @@ class Counter extends Component {
   }
 
   feed(e) {
-
       this.setState(
         {
           value: this.refs.feedQty.value
@@ -50,8 +49,6 @@ class Counter extends Component {
           this.props.updateQuantity(this.state.value);
         }
       );
-    
-    
   }
 
   resetQuantity() {
@@ -59,6 +56,7 @@ class Counter extends Component {
       value: 1
     });
   }
+  
   render() {
     return (
       <div className="stepper-input">

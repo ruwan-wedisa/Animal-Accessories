@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import CartScrollBar from "./CartScrollBar";
-import Counter from "./Counter";
 import EmptyCart from "../empty-states/EmptyCart";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import { findDOMNode } from "react-dom";
-import logo from '../animal-shop.png' 
+import logo from '../static/images/animal-shop.png' 
+import searchIcon from '../static/images/search-green.png' 
+import backButton from '../static/images/back.png' 
+import cartIcon from '../static/images/bag.png' 
 import axios from "axios";
-
 
 class Header extends Component {
   constructor(props) {
@@ -25,9 +26,9 @@ class Header extends Component {
     };
 
     this.getProductUnitPrice = this.getProductUnitPrice.bind(this)
-   // this.setTotalUnitPrice = this.setTotalUnitPrice.bind(this)
     this.setTotalUnitPriceItem1 = this.setTotalUnitPriceItem1.bind(this)
     this.setTotalUnitPriceItem1 = this.setTotalUnitPriceItem1.bind(this)
+
   }
   
   handleCart(e) {
@@ -36,15 +37,18 @@ class Header extends Component {
       showCart: !this.state.showCart
     });
   }
+
   handleSubmit(e) {
     e.preventDefault();
   }
+
   handleMobileSearch(e) {
     e.preventDefault();
     this.setState({
       mobileSearch: true
     });
   }
+
   handleSearchNav(e) {
     e.preventDefault();
     this.setState(
@@ -57,7 +61,6 @@ class Header extends Component {
       }
     );
   }
-
 
   handleClickOutside(event) {
     const cartNode = findDOMNode(this.refs.cartPreview);
@@ -76,38 +79,18 @@ class Header extends Component {
     if(nextProps.cartItems != undefined) {
     nextProps.cartItems.map(product => {
       this.getProductUnitPrice(product)
-
-      console.log('this.itemPriceArr ',this.state.itemPrice.id.totalUnitPrice)
     })
   }
   }
 
-  // getProductUnitPrice(product) {
-  //   var id = product.id;
-  //   var qty = product.quantity;
-  //   //let url = "https://res.cloudinary.com/ruwanwedisa/raw/upload/v1601034805/json/products_rcu34w.json";
-  //   let url = "http://localhost:8080/items/calculate_price/single/"+id+"/"+qty
-  //   axios.get(url).then(response => {
-  //     console.log('test ruwan',response.data.price)
-    
-  //   }, function(response){
-  //     console.log(response,'response')
-  //   });
-
-  // }
-
-
   getProductUnitPrice(product){
     var id = product.id;
-    console.log('cid',id)
     var qty = product.quantity;
-    console.log('cqty',qty)
     axios({
       url: "http://localhost:8080/items/calculate_price/single/"+id+"/"+qty,
       method: 'get'
     })
     .then(response => {
-        console.log(response.data ,'ggx');
         if(id == 1){
           this.setTotalUnitPriceItem1(response.data.price)
         }else{
@@ -117,24 +100,16 @@ class Header extends Component {
 
   }
 
-
-
   setTotalUnitPriceItem1(amount){
-    console.log('current price ',amount)
-
     this.setState(prevState => {
       return {totalUnitPriceItem1: amount}
     });
-
   }
 
   setTotalUnitPriceItem2(amount){
-    console.log('current price ',amount)
-
     this.setState(prevState => {
       return {totalUnitPriceItem2: amount}
     });
-
   }
 
   componentDidMount() {
@@ -145,6 +120,7 @@ class Header extends Component {
       0
     );
   }
+
   componentWillUnmount() {
     document.removeEventListener(
       "click",
@@ -153,17 +129,15 @@ class Header extends Component {
       0
     );
   }
+
   render() {
     let cartItems;
     let unitPriceProduct;
 
     cartItems = this.state.cart.map(product => {
-      // this.getProductUnitPrice.bind(product.id,product.quantity)
-
-      // console.log(productUnitPrice,'gg')
-
+      
       unitPriceProduct =  this.state.productUnitPrice;
-      console.log(unitPriceProduct,'gg')
+
       return (
         <li className="cart-item" key={product.itemName}>
           <img className="product-image" src={product.imageUrl} />
@@ -176,11 +150,7 @@ class Header extends Component {
               {product.quantity} {product.quantity > 1 ? "Nos." : "No."}{" "}
             </p>
             <p className="amount">{
-              //this.state.itemPrice
-              //product.quantity * product.priceOFSingleCartoon
               product.id == 1 ? this.state.totalUnitPriceItem1 : this.state.totalUnitPriceItem2
-
-
             }
             </p>
           </div>
@@ -194,7 +164,9 @@ class Header extends Component {
         </li>
       );
     });
+
     let view;
+
     if (cartItems.length <= 0) {
       view = <EmptyCart />;
     } else {
@@ -217,7 +189,7 @@ class Header extends Component {
             <img
               className="logo"
               src={logo}
-              alt="Veggy Brand Logo"
+              alt="Animal Store Logo"
             />
           </div>
 
@@ -228,7 +200,7 @@ class Header extends Component {
               onClick={this.handleMobileSearch.bind(this)}
             >
               <img
-                src="https://res.cloudinary.com/sivadass/image/upload/v1494756966/icons/search-green.png"
+                src={searchIcon}
                 alt="search"
               />
             </a>
@@ -245,7 +217,7 @@ class Header extends Component {
                 onClick={this.handleSearchNav.bind(this)}
               >
                 <img
-                  src="https://res.cloudinary.com/sivadass/image/upload/v1494756030/icons/back.png"
+                  src={backButton}
                   alt="back"
                 />
               </a>
@@ -293,7 +265,7 @@ class Header extends Component {
             >
               <img
                 className={this.props.cartBounce ? "tada" : " "}
-                src="https://res.cloudinary.com/sivadass/image/upload/v1493548928/icons/bag.png"
+                src={cartIcon}
                 alt="Cart"
               />
               {this.props.totalItems ? (
@@ -308,15 +280,16 @@ class Header extends Component {
               }
               ref="cartPreview"
             >
-              <CartScrollBar>{view}</CartScrollBar>
-              <div className="action-block">
-                <button
-                  type="button"
-                  className={this.state.cart.length > 0 ? " " : "disabled"}
-                >
-                  PROCEED TO CHECKOUT
-                </button>
-              </div>
+
+            <CartScrollBar>{view}</CartScrollBar>
+            <div className="action-block">
+              <button
+                type="button"
+                className={this.state.cart.length > 0 ? " " : "disabled"}
+              >
+                PROCEED TO CHECKOUT
+              </button>
+            </div>
             </div>
           </div>
         </div>
