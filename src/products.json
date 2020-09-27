@@ -1,26 +1,24 @@
 [
-    {
-      "id": 1,
-      "itemName": "Penguin-ears",
-      "noOfUnitsInCartoon":20,
-      "priceOFSingleCartoon": 175,
-      "imageUrl": "https://res.cloudinary.com/sivadass/image/upload/v1493620046/dummy-products/broccoli.jpg",
-      "increasedPrecentage":0.4,
-      "discountPrecentage":0.1,
-      "minCartoonAmountToDiscount":3,
-      "category": "animal accessories"
-    },
-    {
-      "id": 2,
-      "itemName": "Horseshoe",
-      "noOfUnitsInCartoon":4,
-      "priceOFSingleCartoon": 875,
-      "imageUrl": "https://res.cloudinary.com/sivadass/image/upload/v1493620046/dummy-products/cauliflower.jpg",
-      "increasedPrecentage":0.4,
-      "discountPrecentage":0.1,
-      "minCartoonAmountToDiscount":3,
-      "category": "animal accessories"
-    }
+  {
+    "itemName": "Penguin-ears",
+    "noOfUnitsInCartoon":20,
+    "priceOFSingleCartoon": 175,
+    "imageUrl": "https://res.cloudinary.com/ruwanwedisa/image/upload/v1601197461/images/penguinEars_mft3ah.jpg",
+    "increasedPrecentage":0.3,
+    "discountPrecentage":0.1,
+    "minCartoonAmountToDiscount":3
+  }
+  ,
+  
+  {
+    "itemName": "Horseshoe",
+    "noOfUnitsInCartoon":4,
+    "priceOFSingleCartoon": 875,
+    "imageUrl": "https://res.cloudinary.com/ruwanwedisa/image/upload/v1601197914/images/horseShoe_nong2i.jpg",
+    "increasedPrecentage":0.3,
+    "discountPrecentage":0.1,
+    "minCartoonAmountToDiscount":3
+  }
  ]
 
 
