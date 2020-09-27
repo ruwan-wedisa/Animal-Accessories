@@ -36,16 +36,15 @@ header {
 }
 // Logo
 .brand .logo {
-  width: 123px;
-  @media (max-width: 480px) {
-    width: 102px;
-    margin: 2px 0;
-  }
+  height: 56px;
+  width: 195px;
+  margin: unset;
+  
 }
 
 // Search Box
 .search {
-  margin-left: 64px;
+  margin-left: 45px;
   flex-grow: 1;
   -webkit-flex-grow: 1;
   @media (max-width: 767px) {
@@ -123,11 +122,11 @@ header {
 .cart {
   display: flex;
   display: -webkit-flex;
-  margin-left: 64px;
+  margin-left: 40px;
   position: relative;
   z-index: 99;
   @media (max-width: 991px) {
-    margin-left: 16px;
+    margin-left: 14px;
   }
 }
 .cart-info {

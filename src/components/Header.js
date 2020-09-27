@@ -269,7 +269,7 @@ class Header extends Component {
               <table>
                 <tbody>
                   <tr>
-                    <td>Total No. of items</td>
+                    <td>No. of items</td>
                     <td>:</td>
                     <td>
                       <strong>{this.props.totalItems}</strong>

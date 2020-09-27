@@ -5,7 +5,7 @@ const Footer = props => {
     <footer>
       <p className="footer-links">
         <a
-          href="https://github.com/ruwan-wedisa/react-shopping-cart"
+          href="#"
           target="_blank"
         >
           View Source on Github
