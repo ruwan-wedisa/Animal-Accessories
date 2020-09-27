@@ -13,7 +13,7 @@ class Product extends Component {
     };
   }
   
-  addToCartCarton(imageUrl, itemName, priceOFSingleCartoon, id, quantity) {
+  addToCartCarton(imageUrl, itemName, priceOFSingleCartoon, id, quantity, unitsPerCarton) {
     this.setState(
       {
         selectedProduct: {
@@ -21,7 +21,7 @@ class Product extends Component {
           itemName: itemName,
           priceOFSingleCartoon: priceOFSingleCartoon,
           id: id,
-          quantity: quantity
+          quantity: quantity*unitsPerCarton
         }
       },
       function() {
@@ -43,13 +43,13 @@ class Product extends Component {
     );
   }
 
-  addToCartSingle(imageUrl, itemName, priceOFSingleUnit, id, quantity) {
+  addToCartSingle(imageUrl, itemName, priceOFSingleCartoon, id, quantity, unitsPerCarton) {
     this.setState(
       {
         selectedProduct: {
           imageUrl: imageUrl,
           itemName: itemName,
-          priceOFSingleUnit: priceOFSingleUnit,
+          priceOFSingleCartoon: priceOFSingleCartoon,
           id: id,
           quantity: quantity
         }
@@ -112,6 +112,8 @@ class Product extends Component {
     
     let id = this.props.id;
     let quantity = this.props.productQuantity;
+    let unitsPerCarton = this.props.unitsPerCarton;
+
     return (
       <div className="product">
         <h4 className="product-name">{this.props.itemName}</h4>
@@ -147,6 +149,7 @@ class Product extends Component {
           productQuantity={quantity}
           updateQuantity={this.props.updateQuantity}
           resetQuantity={this.resetQuantity}
+          carton = {true}
         />
               <div className="sale-count-label">Carton Amount</div>
               <div className="product-action">
@@ -159,7 +162,9 @@ class Product extends Component {
                     itemName,
                     priceOFSingleCartoon,
                     id,
-                    quantity
+                    quantity,
+                    unitsPerCarton
+
                   )}
                 >
                   {!this.state.isAddedCarton ? "ADD TO CART" : "✔ ADDED"}
@@ -185,7 +190,8 @@ class Product extends Component {
                     itemName,
                     priceOFSingleCartoon,
                     id,
-                    quantity
+                    quantity,
+                    unitsPerCarton
                   )}
                 >
                   {!this.state.isAddedSingle ? "ADD TO CART" : "✔ ADDED"}

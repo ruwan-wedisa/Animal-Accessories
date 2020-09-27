@@ -23,7 +23,6 @@ class UnitPriceList extends Component {
   componentWillReceiveProps(nextProps){
     
     var itemId = nextProps.product.id;
-    console.log('item id from props ruwan',itemId)
     if(itemId != undefined) {
       this.getProductUnitPricingList(itemId);
     }

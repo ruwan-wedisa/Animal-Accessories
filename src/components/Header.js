@@ -5,6 +5,7 @@ import EmptyCart from "../empty-states/EmptyCart";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import { findDOMNode } from "react-dom";
 import logo from '../animal-shop.png' 
+import axios from "axios";
 
 
 class Header extends Component {
@@ -13,9 +14,22 @@ class Header extends Component {
     this.state = {
       showCart: false,
       cart: this.props.cartItems,
-      mobileSearch: false
+      mobileSearch: false,
+      totalUnitPriceItem1:0,
+      totalUnitPriceItem2:0,
+      itemPrice: {
+          id: {
+            totalUnitPrice:0
+          }
+      }
     };
+
+    this.getProductUnitPrice = this.getProductUnitPrice.bind(this)
+   // this.setTotalUnitPrice = this.setTotalUnitPrice.bind(this)
+    this.setTotalUnitPriceItem1 = this.setTotalUnitPriceItem1.bind(this)
+    this.setTotalUnitPriceItem1 = this.setTotalUnitPriceItem1.bind(this)
   }
+  
   handleCart(e) {
     e.preventDefault();
     this.setState({
@@ -43,6 +57,8 @@ class Header extends Component {
       }
     );
   }
+
+
   handleClickOutside(event) {
     const cartNode = findDOMNode(this.refs.cartPreview);
     const buttonNode = findDOMNode(this.refs.cartButton);
@@ -55,35 +71,118 @@ class Header extends Component {
       }
     }
   }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.cartItems != undefined) {
+    nextProps.cartItems.map(product => {
+      this.getProductUnitPrice(product)
+
+      console.log('this.itemPriceArr ',this.state.itemPrice.id.totalUnitPrice)
+    })
+  }
+  }
+
+  // getProductUnitPrice(product) {
+  //   var id = product.id;
+  //   var qty = product.quantity;
+  //   //let url = "https://res.cloudinary.com/ruwanwedisa/raw/upload/v1601034805/json/products_rcu34w.json";
+  //   let url = "http://localhost:8080/items/calculate_price/single/"+id+"/"+qty
+  //   axios.get(url).then(response => {
+  //     console.log('test ruwan',response.data.price)
+    
+  //   }, function(response){
+  //     console.log(response,'response')
+  //   });
+
+  // }
+
+
+  getProductUnitPrice(product){
+    var id = product.id;
+    console.log('cid',id)
+    var qty = product.quantity;
+    console.log('cqty',qty)
+    axios({
+      url: "http://localhost:8080/items/calculate_price/single/"+id+"/"+qty,
+      method: 'get'
+    })
+    .then(response => {
+        console.log(response.data ,'ggx');
+        if(id == 1){
+          this.setTotalUnitPriceItem1(response.data.price)
+        }else{
+          this.setTotalUnitPriceItem2(response.data.price)
+        }
+    });
+
+  }
+
+
+
+  setTotalUnitPriceItem1(amount){
+    console.log('current price ',amount)
+
+    this.setState(prevState => {
+      return {totalUnitPriceItem1: amount}
+    });
+
+  }
+
+  setTotalUnitPriceItem2(amount){
+    console.log('current price ',amount)
+
+    this.setState(prevState => {
+      return {totalUnitPriceItem2: amount}
+    });
+
+  }
+
   componentDidMount() {
     document.addEventListener(
       "click",
       this.handleClickOutside.bind(this),
-      true
+      true,
+      0
     );
   }
   componentWillUnmount() {
     document.removeEventListener(
       "click",
       this.handleClickOutside.bind(this),
-      true
+      true,
+      0
     );
   }
   render() {
     let cartItems;
+    let unitPriceProduct;
+
     cartItems = this.state.cart.map(product => {
+      // this.getProductUnitPrice.bind(product.id,product.quantity)
+
+      // console.log(productUnitPrice,'gg')
+
+      unitPriceProduct =  this.state.productUnitPrice;
+      console.log(unitPriceProduct,'gg')
       return (
         <li className="cart-item" key={product.itemName}>
           <img className="product-image" src={product.imageUrl} />
           <div className="product-info">
             <p className="product-name">{product.itemName}</p>
-            <p className="product-price">{product.priceOFSingleCartoon}</p>
+            <p className="product-price">{this.props.total}</p>
           </div>
           <div className="product-total">
             <p className="quantity">
               {product.quantity} {product.quantity > 1 ? "Nos." : "No."}{" "}
             </p>
-            <p className="amount">{product.quantity * product.priceOFSingleCartoon}</p>
+            <p className="amount">{
+              //this.state.itemPrice
+              //product.quantity * product.priceOFSingleCartoon
+              product.id == 1 ? this.state.totalUnitPriceItem1 : this.state.totalUnitPriceItem2
+
+
+            }
+            </p>
           </div>
           <a
             className="product-remove"
@@ -170,7 +269,7 @@ class Header extends Component {
               <table>
                 <tbody>
                   <tr>
-                    <td>No. of items</td>
+                    <td>Total No. of items</td>
                     <td>:</td>
                     <td>
                       <strong>{this.props.totalItems}</strong>

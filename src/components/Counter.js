@@ -4,20 +4,23 @@ import PropTypes from "prop-types";
 class Counter extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: this.props.productQuantity };
+    this.state = { 
+      value: this.props.productQuantity ,
+      carton:this.props.carton
+    };
     this.increment = this.increment.bind(this);
     this.decrement = this.decrement.bind(this);
   }
 
   increment(e) {
-    this.setState(
-      prevState => ({
-        value: Number(prevState.value) + 1
-      }),
-      function() {
-        this.props.updateQuantity(this.state.value);
-      }
-    );
+      this.setState(
+        prevState => ({
+            value: Number(prevState.value) + 1
+        }),
+        function() {
+          this.props.updateQuantity(this.state.value);
+        }
+      );    
     e.preventDefault();
   }
 
@@ -38,14 +41,17 @@ class Counter extends Component {
   }
 
   feed(e) {
-    this.setState(
-      {
-        value: this.refs.feedQty.value
-      },
-      function() {
-        this.props.updateQuantity(this.state.value);
-      }
-    );
+
+      this.setState(
+        {
+          value: this.refs.feedQty.value
+        },
+        function() {
+          this.props.updateQuantity(this.state.value);
+        }
+      );
+    
+    
   }
 
   resetQuantity() {

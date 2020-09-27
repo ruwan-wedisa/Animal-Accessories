@@ -23,7 +23,9 @@ class App extends Component {
       quickViewProduct: {},
       quickViewUnitPrices:{},
       modalActive: false,
-      modalUnitPrice:false
+      modalUnitPrice:false,
+      price:0,
+      currentPrice:0
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
@@ -38,6 +40,8 @@ class App extends Component {
     this.openModalUnitPrice = this.openModalUnitPrice.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.closeModalUnitPrice = this.closeModalUnitPrice.bind(this);
+    this.getUnitPrice = this.getUnitPrice.bind(this);
+    this.setTotalPrice = this.setTotalPrice.bind(this)
   }
   // Fetch Initial Set of Products from external API
   getProducts() {
@@ -49,9 +53,30 @@ class App extends Component {
       });
     });
   }
+
+   getUnitPrice(requestBody){
+
+    axios({
+      url: 'http://localhost:8080/items/calculate_price/all',
+      method: 'post',
+      data: requestBody
+    })
+    .then(response => {
+        console.log(response.data.price ,'gg');
+        this.setTotalPrice(response.data.price)
+    });
+
+  }
+  
+
+
+
   componentWillMount() {
     this.getProducts();
+
   }
+
+
 
   // Search by Keyword
   handleSearch(event) {
@@ -118,21 +143,47 @@ class App extends Component {
   }
   sumTotalItems() {
     let total = 0;
+    let totalQuantity = 0;
     let cart = this.state.cart;
     total = cart.length;
+    for (var i = 0; i < cart.length; i++) {
+      totalQuantity += cart[i].quantity
+    }
     this.setState({
-      totalItems: total
+      totalItems: totalQuantity
     });
+  }
+
+  setTotalPrice(amount){
+    console.log('current price ',amount)
+
+    this.setState(prevState => {
+      return {totalAmount: amount}
+    });
+
+    // this.setState({
+    //   totalAmount: price
+    // });
+
   }
   sumTotalAmount() {
     let total = 0;
     let cart = this.state.cart;
+    let price = 0;
+
+    let requestBody = [];
+
+
     for (var i = 0; i < cart.length; i++) {
-      total += cart[i].priceOFSingleCartoon * parseInt(cart[i].quantity);
+     
+     console.log( "itemId",cart[i].id,  "amount",cart[i].quantity )
+     var obj = {	"itemId":cart[i].id,  "amount":cart[i].quantity}
+     requestBody.push(obj)
+
     }
-    this.setState({
-      totalAmount: total
-    });
+    
+    this.getUnitPrice(requestBody)
+    
   }
 
   //Reset Quantity

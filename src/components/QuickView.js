@@ -33,7 +33,6 @@ class QuickView extends Component {
   }
 
   render() {
-    
     return (
       <div
         className={
